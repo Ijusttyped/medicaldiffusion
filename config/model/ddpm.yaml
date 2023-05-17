@@ -5,7 +5,7 @@ diffusion_img_size: ???
 diffusion_depth_size: ???
 diffusion_num_channels: ???
 dim_mults: ???
-results_folder: /data/home/firas/Desktop/work/other_groups/medicaldiffusion/checkpoints/ddpm/
+results_folder: /dhc/home/marcel.fernandezrosa/medicaldiffusion/output/checkpoints/ddpm
 results_folder_postfix: ''
 load_milestone: False
 
