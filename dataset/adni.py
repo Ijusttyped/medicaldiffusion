@@ -12,14 +12,17 @@ import nibabel as nib
 import argparse
 import glob
 import torchio as tio
+import pandas as pd
 
 
 class ADNIDataset(Dataset):
     def __init__(self, root_dir="../ADNI", augmentation=False):
         self.root_dir = root_dir
-        self.file_names = glob.glob(
-            os.path.join(root_dir, "**/MPRAGE/**/**/nifti.nii.gz"), recursive=True
-        )
+        # self.file_names = glob.glob(
+        #     os.path.join(root_dir, "**/MPRAGE/**/**/nifti.nii.gz"), recursive=True
+        # )
+        self.data = pd.read_csv(os.path.join(root_dir, "adni_annotation.csv"))
+        self.file_names = self.data[self.data["CDGLOBAL"] == 0.0]["filepath_MNI"][:100].values
         self.augmentation = augmentation
 
     def __len__(self):
@@ -52,6 +55,8 @@ class ADNIDataset(Dataset):
         img = nib.load(path)
 
         img = np.swapaxes(img.get_data(), 1, 2)
+        if len(img.shape) == 4:
+            print("Found 4D image: {}".format(path))
         img = np.flip(img, 1)
         img = np.flip(img, 2)
         img = self.roi_crop(image=img)

@@ -8,7 +8,7 @@ default_root_dir: /dhc/home/marcel.fernandezrosa/medicaldiffusion/output/checkpo
 default_root_dir_postfix: ''
 resume_from_checkpoint:
 max_steps: -1
-max_epochs: -1
+max_epochs: 100
 precision: 16
 gradient_clip_val: 1.0
 
