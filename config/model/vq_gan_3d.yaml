@@ -1,5 +1,5 @@
 seed: 1234
-batch_size: 30
+batch_size: 2
 num_workers: 32
 
 gpus: 1
@@ -14,7 +14,7 @@ gradient_clip_val: 1.0
 
 
 embedding_dim: 8
-n_codes: 2048
+n_codes: 16384
 n_hiddens: 16
 lr: 3e-4
 downsample: [2, 2, 2]
@@ -33,5 +33,3 @@ no_random_restart: False
 norm_type: group
 padding_type: replicate
 num_groups: 32
-
-
