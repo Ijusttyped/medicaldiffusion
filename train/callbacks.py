@@ -8,6 +8,7 @@ import torch
 import torchvision
 from pytorch_lightning.callbacks import Callback
 from pytorch_lightning.utilities.distributed import rank_zero_only
+from pytorch_lightning.loggers import TensorBoardLogger
 
 from vq_gan_3d.utils import save_video_grid
 
@@ -85,10 +86,12 @@ class ImageLogger(Callback):
         return False
 
     def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx, dataloader_idx):
-        self.log_img(pl_module, batch, batch_idx, split="train")
+        if isinstance(trainer.logger, TensorBoardLogger):
+            self.log_img(pl_module, batch, batch_idx, split="train")
 
     def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx, dataloader_idx):
-        self.log_img(pl_module, batch, batch_idx, split="val")
+        if isinstance(trainer.logger, TensorBoardLogger):
+            self.log_img(pl_module, batch, batch_idx, split="val")
 
 
 class VideoLogger(Callback):
@@ -164,7 +167,9 @@ class VideoLogger(Callback):
         return False
 
     def on_train_batch_end(self, trainer, pl_module, outputs, batch, batch_idx, dataloader_idx):
-        self.log_vid(pl_module, batch, batch_idx, split="train")
+        if isinstance(trainer.logger, TensorBoardLogger):
+            self.log_vid(pl_module, batch, batch_idx, split="train")
 
     def on_validation_batch_end(self, trainer, pl_module, outputs, batch, batch_idx, dataloader_idx):
-        self.log_vid(pl_module, batch, batch_idx, split="val")
+        if isinstance(trainer.logger, TensorBoardLogger):
+            self.log_vid(pl_module, batch, batch_idx, split="val")

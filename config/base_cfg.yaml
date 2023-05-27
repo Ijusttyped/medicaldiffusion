@@ -1,3 +1,5 @@
 defaults:
   - dataset: ??? 
-  - model: ??? 
+  - model: ???
+wandb_project: MedicalDiffusion
+run_name: ???
