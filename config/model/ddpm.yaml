@@ -6,10 +6,10 @@ diffusion_depth_size: ???
 diffusion_num_channels: ???
 dim_mults: ???
 results_folder: /dhc/home/marcel.fernandezrosa/medicaldiffusion/output/checkpoints/ddpm
-results_folder_postfix: ''
+results_folder_postfix: 'T1toMNI'
 load_milestone: False
 
-batch_size: 40
+batch_size: 10
 num_workers: 20
 logger: wandb
 objective: pred_x0
@@ -24,5 +24,4 @@ gradient_accumulate_every: 2 # gradient accumulation steps
 ema_decay: 0.995 # exponential moving average decay
 amp: False # turn on mixed precision
 num_sample_rows: 1
-gpus: 0
-
+gpus: 1
