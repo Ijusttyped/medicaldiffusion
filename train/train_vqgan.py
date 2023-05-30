@@ -16,16 +16,6 @@ from omegaconf import DictConfig, open_dict
 @hydra.main(config_path="../config", config_name="base_cfg", version_base=None)
 def run(cfg: DictConfig):
     pl.seed_everything(cfg.model.seed)
-    wandb_logger = pl.loggers.WandbLogger(
-        project=cfg.wandb_project,
-        entity="marcel-hpi",
-        name=cfg.run_name,
-        config=cfg,
-    )
-    tb_logger = pl.loggers.TensorBoardLogger(
-        os.path.join(cfg.model.default_root_dir, cfg.model.default_root_dir_postfix),
-        name=cfg.run_name,
-    )
 
     train_dataset, val_dataset, sampler = get_dataset(cfg)
     train_dataloader = DataLoader(
@@ -55,7 +45,21 @@ def run(cfg: DictConfig):
             cfg.model.default_root_dir,
             cfg.dataset.name,
             cfg.model.default_root_dir_postfix,
+            cfg.run_name,
         )
+
+    tb_logger = pl.loggers.TensorBoardLogger(
+        save_dir=cfg.model.default_root_dir,
+        name=cfg.run_name,
+    )
+    wandb_logger = pl.loggers.WandbLogger(
+        project=cfg.wandb_project,
+        entity="marcel-hpi",
+        name=cfg.run_name,
+        config=cfg,
+        save_dir=cfg.model.default_root_dir,
+    )
+
     print(
         "Setting learning rate to {:.2e} = {} (accumulate_grad_batches) * {} (num_gpus/8) * {} (batchsize/4) * {:.2e} (base_lr)".format(
             cfg.model.lr, accumulate, ngpu / 8, bs / 4, base_lr
