@@ -372,8 +372,13 @@ def compute_feature_stats_for_generator(
             trainer.ema_model.eval()
             with torch.no_grad():
                 sample = trainer.ema_model.sample(batch_size=batch_gen)
-            sample = sample.squeeze(dim=1).to(torch.uint8)
-            images.append(sample)
+            sample = sample.squeeze(dim=1)
+            min_value = torch.min(sample)
+            max_value = torch.max(sample)
+            scaled_sample = (sample - min_value) / (max_value - min_value)
+            scaled_sample = scaled_sample * 255
+            scaled_sample = scaled_sample.to(torch.uint8)
+            images.append(scaled_sample)
         images = torch.cat(images)
         if images.shape[1] > 3:
             # For 3D models take middle slices
