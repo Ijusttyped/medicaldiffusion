@@ -24,6 +24,7 @@ class ADNIDataset(Dataset):
         self.sample_size = 998
         self.file_names = self._select_filenames()
         self.augmentation = augmentation
+        self.name = "adni"
 
     def __len__(self):
         return len(self.file_names)
