@@ -18,9 +18,7 @@ import pandas as pd
 class ADNIDataset(Dataset):
     def __init__(self, root_dir="../ADNI", augmentation=False):
         self.root_dir = root_dir
-        self.data = pd.read_csv(
-            os.path.join(root_dir, "adni_annotation.csv")
-        )  # .iloc[2:]
+        self.data = pd.read_csv(os.path.join(root_dir, "adni_annotation.csv"))
         self.sample_size = 998
         self.file_names = self._select_filenames()
         self.augmentation = augmentation
@@ -75,8 +73,6 @@ class ADNIDataset(Dataset):
         return {"data": imageout}
 
     def _select_filenames(self) -> np.ndarray:
-        # self.data["ID"] = self.data["filepath_MNI"].apply(lambda x: x.split("/")[5])
-        # data = self.data.drop_duplicates(subset="ID", keep="first")
         cdr0 = self.data[self.data["CDGLOBAL"] == 0.0]
         self.sample_data = cdr0.sample(self.sample_size, random_state=42)
         return self.sample_data["filepath_MNI"].values

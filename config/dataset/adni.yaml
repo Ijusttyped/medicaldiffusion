@@ -1,4 +1,4 @@
 name: ADNI
-root_dir: /dhc/groups/fglippert/adni_t1_mprage
+root_dir: ???
 image_channels: 1
 augmentation: True

@@ -4,8 +4,8 @@ num_workers: 32
 
 gpus: 1
 accumulate_grad_batches: 1
-default_root_dir: /dhc/home/marcel.fernandezrosa/medicaldiffusion/output/checkpoints/vq_gan
-default_root_dir_postfix: 'T1toMNI'
+default_root_dir: ???
+default_root_dir_postfix: 'ADNI'
 resume_from_checkpoint:
 max_steps: -1
 max_epochs: -1
