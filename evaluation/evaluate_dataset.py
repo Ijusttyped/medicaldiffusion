@@ -35,17 +35,15 @@ def calculate_ssim(train_dataset):
     )
     sum_msssim = 0
     num_pairs = len(train_dataset) * (len(train_dataset) - 1) // 2
+    images = list(train_loader)
+    for i in range(len(images)):
+        img1 = images[i]["data"][0].cpu()
 
-    for i, sample1 in enumerate(train_loader):
-        img1 = sample1["data"][0].cpu()
-
-        for j, sample2 in enumerate(train_loader):
-            if i == j:
-                continue
-
-            img2 = sample2["data"][0].cpu()
+        for j in range(i + 1, len(images)):
+            img2 = images[j]["data"][0].cpu()
             msssim = pytorch_ssim.msssim_3d(img1, img2)
             sum_msssim += msssim
+        print(f"Done with image {i}/{len(images)}")
 
     average_msssim = sum_msssim / num_pairs
     return average_msssim
