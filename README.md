@@ -29,8 +29,7 @@ Once all libraries are installed and the datasets have been downloaded, you are 
 First, we need to train the three-dimensional VQ-GAN model. To do so in the ADNI dataset, you can run the following command:
 
 ```
-srun -p gpu,gpupro,gpua100 --gpus=1 --mem 15000
-PL_TORCH_DISTRIBUTED_BACKEND=gloo python train/train_vqgan.py dataset=adni dataset.root_dir='/dhc/groups/fglippert/adni_t1_mprage' model=vq_gan_3d model.gpus=1 model.default_root_dir_postfix='flair' model.precision=16 model.embedding_dim=8 model.n_hiddens=16 model.downsample=[2,2,2] model.num_workers=32 model.gradient_clip_val=1.0 model.lr=3e-4 model.discriminator_iter_start=10000 model.perceptual_weight=4 model.image_gan_weight=1 model.video_gan_weight=1 model.gan_feat_weight=4 model.batch_size=2 model.n_codes=16384 model.accumulate_grad_batches=1 
+PL_TORCH_DISTRIBUTED_BACKEND=gloo python train/train_vqgan.py dataset=adni dataset.root_dir='root_dir' model=vq_gan_3d model.gpus=1 model.default_root_dir_postfix='flair' model.precision=16 model.embedding_dim=8 model.n_hiddens=16 model.downsample=[2,2,2] model.num_workers=32 model.gradient_clip_val=1.0 model.lr=3e-4 model.discriminator_iter_start=10000 model.perceptual_weight=4 model.image_gan_weight=1 model.video_gan_weight=1 model.gan_feat_weight=4 model.batch_size=2 model.n_codes=16384 model.accumulate_grad_batches=1 
 ```
 Note that you need to provide the path to the dataset (e.g. ```dataset.root_dir='/data/BraTS/BraTS 2020'```) to successfully run the command.
 
